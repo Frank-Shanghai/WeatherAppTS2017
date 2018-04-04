@@ -16,6 +16,7 @@ function onDeviceReady(): void {
 
     // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
     $('#get-weather-btn').on('click', Weather.getWeatherWithZipCode);
+    Weather.getWeatherWithGeoLocation();
 }
 
 function onPause(): void {

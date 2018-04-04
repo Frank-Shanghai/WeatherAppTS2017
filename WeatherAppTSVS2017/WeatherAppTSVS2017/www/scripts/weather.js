@@ -35,5 +35,29 @@ define(["require", "exports"], function (require, exports) {
             $('#error-msg').text("Error retrieving data. ");
         }
     }
+    function getWeatherWithGeoLocation() {
+        navigator.geolocation.getCurrentPosition(onGetLocationSuccess, onGetLocationError, { enableHighAccuracy: true });
+        $('#error-msg').show();
+        $('#error-msg').text('Determining your current location ...');
+        $('#get-weather-btn').prop('disabled', true);
+    }
+    exports.getWeatherWithGeoLocation = getWeatherWithGeoLocation;
+    function onGetLocationSuccess(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+        var queryString = 'http://api.openweathermap.org/data/2.5/weather?lat='
+            + latitude + '&lon=' + longitude + '&appid=' + OpenWeatherAppKey + '&units=imperial';
+        $('#get-weather-btn').prop('disabled', false);
+        $.getJSON(queryString, function (results) {
+            showWeatherData(results);
+        }).fail(function (jqXHR) {
+            $('#error-msg').show();
+            $('#error-msg').text("Error retrieving data. " + jqXHR.statusText);
+        });
+    }
+    function onGetLocationError(error) {
+        $('#error-msg').text('Error getting location');
+        $('#get-weather-btn').prop('disabled', false);
+    }
 });
 //# sourceMappingURL=weather.js.map

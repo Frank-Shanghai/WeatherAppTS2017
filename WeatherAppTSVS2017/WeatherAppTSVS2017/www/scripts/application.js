@@ -14,6 +14,7 @@ define(["require", "exports", "./weather"], function (require, exports, Weather)
         document.addEventListener('resume', onResume, false);
         // TODO: Cordova has been loaded. Perform any initialization that requires Cordova here.
         $('#get-weather-btn').on('click', Weather.getWeatherWithZipCode);
+        Weather.getWeatherWithGeoLocation();
     }
     function onPause() {
         // TODO: This application has been suspended. Save application state here.
